@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".textnote.TextNoteActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/HeadLL"
+        >
+
+        <EditText
+            android:id="@+id/headingTextNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="top|start"
+            android:hint="Heading"
+            android:maxLength="30"
+            android:inputType="textMultiLine|textCapSentences"
+            android:padding="16dp"
+            android:textSize="30sp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/saveTextNote"
+            android:src="@drawable/baseline_check_24"
+            app:tint="?attr/colorOnBackground"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/HeadLL"
+        android:layout_marginBottom="62dp"
+        >
+        <EditText
+            android:id="@+id/editTextNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="top|start"
+            android:inputType="textMultiLine|textCapSentences"
+            android:padding="16dp"
+            android:textSize="20sp"
+            android:hint="Type your text note here"/>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:padding="8dp">
+
+        <ImageButton
+            android:id="@+id/btnBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_format_bold_24"
+            app:tint="?attr/colorOnBackground"
+            android:contentDescription="Bold"/>
+
+        <ImageButton
+            android:id="@+id/btnItalic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_format_italic_24"
+            app:tint="?attr/colorOnBackground"
+            android:contentDescription="Italic"/>
+
+        <ImageButton
+            android:id="@+id/btnUnderline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_format_underlined_24"
+            app:tint="?attr/colorOnBackground"
+            android:contentDescription="Underline"/>
+
+        <ImageButton
+            android:id="@+id/btnIncreaseFontSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_text_increase_24"
+            app:tint="?attr/colorOnBackground"
+            android:contentDescription="Increase Font Size"/>
+
+        <ImageButton
+            android:id="@+id/btnDecreaseFontSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_text_decrease_24"
+            app:tint="?attr/colorOnBackground"
+            android:contentDescription="Decrease Font Size"/>
+    </LinearLayout>
+
+</RelativeLayout>

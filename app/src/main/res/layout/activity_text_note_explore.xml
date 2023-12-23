@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".textnote.TextNoteExploreActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:id="@+id/LLTextExp"
+        >
+
+        <androidx.appcompat.widget.SearchView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/exploreSV"
+            app:iconifiedByDefault="false"
+            android:layout_weight="0.5"
+            app:queryHint="Search note"
+            />
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/createNewTextExplore"
+            android:src="@drawable/baseline_add_24"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:contentDescription="Create New"
+            />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/LLTextExp"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RVtextNoteExplore"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:listitem="@layout/text_explore_activity_rv_items"
+            />
+    </RelativeLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/float_button"
+        android:src="@drawable/baseline_add_24"
+        app:elevation="8dp"
+        app:shapeAppearance="@drawable/float_button" />
+
+
+</RelativeLayout>
