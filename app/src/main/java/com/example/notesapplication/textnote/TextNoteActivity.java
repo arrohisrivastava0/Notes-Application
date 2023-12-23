@@ -113,10 +113,13 @@ public class TextNoteActivity extends AppCompatActivity {
                 else {
                     if(isExisting){
                         updateNoteInDatabase(noteId,editTextNote.getText().toString(), editTextNoteHeading.getText().toString());
+                        finish();
                     }
-                    saveTextNoteToDatabase(editTextNote.getText().toString(), editTextNoteHeading.getText().toString());
-                    Log.d("SaveButton", "Save button clicked");
-                    finish();
+                    else {
+                        saveTextNoteToDatabase(editTextNote.getText().toString(), editTextNoteHeading.getText().toString());
+                        Log.d("SaveButton", "Save button clicked");
+                        finish();
+                    }
                 }
             }
         });
@@ -176,7 +179,7 @@ public class TextNoteActivity extends AppCompatActivity {
     private void updateNoteInDatabase(long noteId, String noteText, String noteHead) {
        SQLiteDatabase sqLiteDatabase=textNoteDatabaseHelper.getWritableDatabase();
        ContentValues contentValues=new ContentValues();
-       contentValues.put(TextNoteDatabaseHelper.COLUMN_NOTE_TEXT, noteHead);
+       contentValues.put(TextNoteDatabaseHelper.COLUMN_NOTE_TEXT, noteText);
        contentValues.put(TextNoteDatabaseHelper.COLUMN_NOTE_HEADING, noteHead);
        int rowsAffected = sqLiteDatabase.update(TextNoteDatabaseHelper.TABLE_NOTES, contentValues,
                TextNoteDatabaseHelper.COLUMN_ID+"=?",
