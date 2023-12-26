@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import java.util.List;
 public class TextNoteExploreRVAdapter extends RecyclerView.Adapter<TextNoteExploreRVAdapter.ViewHolder> {
     private List<TextNoteData> textNoteData;
     private Context context;
+    private boolean isInSelectionMode = false;
 
     public TextNoteExploreRVAdapter(List<TextNoteData> textNoteData, Context context) {
         this.textNoteData = textNoteData;
@@ -35,17 +37,28 @@ public class TextNoteExploreRVAdapter extends RecyclerView.Adapter<TextNoteExplo
         TextNoteData currentTextNoteData = textNoteData.get(position);
         holder.headingTV.setText(currentTextNoteData.getHeading());
         holder.textTV.setText(currentTextNoteData.getContent());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    TextNoteData note = textNoteData.get(position);
-                    // Open the selected note for editing
-                    openNoteForEditing(note);
+        holder.checkBox.setChecked(currentTextNoteData.isSelected());
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int position = holder.getAdapterPosition();
+//                if (position != RecyclerView.NO_POSITION) {
+//                    TextNoteData note = textNoteData.get(position);
+//                    // Open the selected note for editing
+//                    openNoteForEditing(note);
+//                }
+//            }
+//        });
+
+        holder.itemView.setOnClickListener(v -> {
+            if (isInSelectionMode){
+                currentTextNoteData.setSelected(!currentTextNoteData.isSelected());
+                holder.checkBox.setChecked(currentTextNoteData.isSelected());
+            }else {
+                    openNoteForEditing(currentTextNoteData);
                 }
-            }
         });
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> currentTextNoteData.setSelected(isChecked));
     }
 
     @Override
@@ -64,14 +77,24 @@ public class TextNoteExploreRVAdapter extends RecyclerView.Adapter<TextNoteExplo
         context.startActivity(intent);
     }
 
+    public void setInSelectionMode(boolean inSelectionMode) {
+        isInSelectionMode = inSelectionMode;
+    }
+
+    public List<TextNoteData> getTextNoteData() {
+        return textNoteData;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView headingTV;
         TextView textTV;
+        CheckBox checkBox;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             headingTV = itemView.findViewById(R.id.TVTextItemHead);
             textTV = itemView.findViewById(R.id.TVTextItemContent);
+            checkBox=itemView.findViewById(R.id.check);
         }
 
     }

@@ -32,6 +32,7 @@ public class TextNoteExploreActivity extends AppCompatActivity {
     private TextNoteDatabaseHelper textNoteDatabaseHelper;
     private TextNoteExploreRVAdapter textNoteExploreRVAdapter;
     private SearchView searchView;
+    private boolean isInSelectionMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,10 +147,35 @@ public class TextNoteExploreActivity extends AppCompatActivity {
         popupMenu.setOnMenuItemClickListener(item -> {
             // Handle menu item clicks here
             if (item.getItemId()==R.id.action_select){
+                isInSelectionMode=!isInSelectionMode;
+                updateRecyclerView();
                 return true;
             }
             return false;
         });
         popupMenu.show();
+    }
+
+    private void updateRecyclerView() {
+        textNoteExploreRVAdapter.setInSelectionMode(isInSelectionMode);
+        textNoteExploreRVAdapter.notifyDataSetChanged();
+    }
+
+    private void deleteSelectedItems() {
+        List<TextNoteData> selectedItems = new ArrayList<>();
+        for (TextNoteData note : textNoteExploreRVAdapter.getTextNoteData()) {
+            if (note.isSelected()) {
+                selectedItems.add(note);
+            }
+        }
+        textNoteExploreRVAdapter.getTextNoteData().removeAll(selectedItems);
+        updateRecyclerView();
+    }
+
+    private void selectAllItems() {
+        for (TextNoteData note : textNoteExploreRVAdapter.getTextNoteData()) {
+            note.setSelected(true);
+        }
+        updateRecyclerView();
     }
 }
