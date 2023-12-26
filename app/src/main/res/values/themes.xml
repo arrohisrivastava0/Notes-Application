@@ -3,6 +3,7 @@
     <style name="Base.Theme.NotesApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+    <color name="menu_color">@color/white</color>
 
     <style name="Theme.NotesApplication" parent="Base.Theme.NotesApplication" />
 </resources>

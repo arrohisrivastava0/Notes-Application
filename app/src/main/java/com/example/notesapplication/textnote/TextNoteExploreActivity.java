@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
+
 import androidx.appcompat.widget.SearchView;
 ;
 
@@ -15,13 +19,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notesapplication.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TextNoteExploreActivity extends AppCompatActivity {
 
-    private ImageButton createNew;
+    private ImageButton menu;
+    private FloatingActionButton floatingActionButton;
     private RecyclerView recyclerView;
     private TextNoteDatabaseHelper textNoteDatabaseHelper;
     private TextNoteExploreRVAdapter textNoteExploreRVAdapter;
@@ -31,7 +37,8 @@ public class TextNoteExploreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_note_explore);
-        createNew=findViewById(R.id.createNewTextExplore);
+        menu=findViewById(R.id.createNewTextExplore);
+        floatingActionButton=findViewById(R.id.floatAdd);
         recyclerView=findViewById(R.id.RVtextNoteExplore);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         textNoteDatabaseHelper=new TextNoteDatabaseHelper(this);
@@ -84,7 +91,7 @@ public class TextNoteExploreActivity extends AppCompatActivity {
 
 
     private void setCreateNewClickListener(){
-        createNew.setOnClickListener(new View.OnClickListener() {
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(TextNoteExploreActivity.this, TextNoteActivity.class);
@@ -102,6 +109,7 @@ public class TextNoteExploreActivity extends AppCompatActivity {
                 TextNoteDatabaseHelper.COLUMN_NOTE_HEADING,
                 TextNoteDatabaseHelper.COLUMN_NOTE_TEXT
         };
+
         Cursor cursor=sqLiteDatabase.query(
                 TextNoteDatabaseHelper.TABLE_NOTES,
                 projection,
@@ -130,5 +138,18 @@ public class TextNoteExploreActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         textNoteDatabaseHelper.close();
+    }
+    public void showPopupMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.text_note_explore_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(item -> {
+            // Handle menu item clicks here
+            if (item.getItemId()==R.id.action_select){
+                return true;
+            }
+            return false;
+        });
+        popupMenu.show();
     }
 }
