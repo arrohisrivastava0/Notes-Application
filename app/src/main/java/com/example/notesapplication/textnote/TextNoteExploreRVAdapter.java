@@ -52,9 +52,11 @@ public class TextNoteExploreRVAdapter extends RecyclerView.Adapter<TextNoteExplo
 
         holder.itemView.setOnClickListener(v -> {
             if (isInSelectionMode){
+                holder.checkBox.setVisibility(View.VISIBLE);
                 currentTextNoteData.setSelected(!currentTextNoteData.isSelected());
                 holder.checkBox.setChecked(currentTextNoteData.isSelected());
             }else {
+                holder.checkBox.setVisibility(View.GONE);
                     openNoteForEditing(currentTextNoteData);
                 }
         });
