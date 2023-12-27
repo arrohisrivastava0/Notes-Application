@@ -49,6 +49,9 @@ public class TextNoteExploreRVAdapter extends RecyclerView.Adapter<TextNoteExplo
 //                }
 //            }
 //        });
+        if (isInSelectionMode)
+            holder.checkBox.setVisibility(View.VISIBLE);
+        else holder.checkBox.setVisibility(View.GONE);
 
         holder.itemView.setOnClickListener(v -> {
             if (isInSelectionMode){

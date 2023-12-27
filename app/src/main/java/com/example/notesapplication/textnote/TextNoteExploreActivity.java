@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 ;
@@ -36,7 +39,8 @@ public class TextNoteExploreActivity extends AppCompatActivity {
     private SearchView searchView;
     private boolean isInSelectionMode = false;
     private BottomAppBar bottomAppBar;
-    private MaterialButton materialButtonSelectAll, materialButtonDelete;
+    private Button materialButtonSelectAll, materialButtonDelete;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,7 @@ public class TextNoteExploreActivity extends AppCompatActivity {
         bottomAppBar=findViewById(R.id.bottomAppBar);
         materialButtonSelectAll=findViewById(R.id.btnSelectAll);
         materialButtonDelete=findViewById(R.id.btnDelete);
+        textView=findViewById(R.id.TextNoteExpNothingTV);
 
         setCreateNewClickListener();
 
@@ -157,23 +162,28 @@ public class TextNoteExploreActivity extends AppCompatActivity {
         PopupMenu popupMenu = new PopupMenu(this, view);
         MenuInflater inflater = popupMenu.getMenuInflater();
         inflater.inflate(R.menu.text_note_explore_menu, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(item -> {
-            // Handle menu item clicks here
-            if (item.getItemId()==R.id.action_select){
-                isInSelectionMode=!isInSelectionMode;
-                updateRecyclerView();
-                bottomAppBar.setVisibility(View.VISIBLE);
-                setClickListenersBottomAppBar();
-                return true;
-            }
-            return false;
-        });
+            popupMenu.setOnMenuItemClickListener(item -> {
+                // Handle menu item clicks here
+                if (item.getItemId()==R.id.action_select && !getAllTextNotes().isEmpty()){
+                    isInSelectionMode=!isInSelectionMode;
+                    updateRecyclerView();
+                    bottomAppBar.setVisibility(View.VISIBLE);
+                    setClickListenersBottomAppBar();
+                    return true;
+                }
+                Toast.makeText(this,"No items", Toast.LENGTH_SHORT).show();
+                return false;
+            });
+
         popupMenu.show();
     }
 
     private void updateRecyclerView() {
         textNoteExploreRVAdapter.setInSelectionMode(isInSelectionMode);
         textNoteExploreRVAdapter.notifyDataSetChanged();
+        if (getAllTextNotes().isEmpty())
+            textView.setVisibility(View.VISIBLE);
+        else textView.setVisibility(View.GONE);
     }
 
     private void setClickListenersBottomAppBar(){
@@ -192,14 +202,30 @@ public class TextNoteExploreActivity extends AppCompatActivity {
 
     }
     private void deleteSelectedItems() {
-        List<TextNoteData> selectedItems = new ArrayList<>();
+        List<Long> selectedItems = new ArrayList<>();
         for (TextNoteData note : textNoteExploreRVAdapter.getTextNoteData()) {
+
             if (note.isSelected()) {
-                selectedItems.add(note);
+                selectedItems.add(note.getId());
             }
         }
-        textNoteExploreRVAdapter.getTextNoteData().removeAll(selectedItems);
+        deleteFromDb(selectedItems);
+        textNoteExploreRVAdapter.setData(getAllTextNotes());
+        isInSelectionMode=!isInSelectionMode;
         updateRecyclerView();
+        bottomAppBar.setVisibility(View.GONE);
+    }
+
+    private void deleteFromDb(List<Long> items){
+        SQLiteDatabase sqLiteDatabase=textNoteDatabaseHelper.getWritableDatabase();
+        try {
+            for(long noteId:items){
+                sqLiteDatabase.delete(TextNoteDatabaseHelper.TABLE_NOTES, TextNoteDatabaseHelper.COLUMN_ID+"=?",
+                        new String[]{String.valueOf(noteId)});
+            }
+        }finally {
+            sqLiteDatabase.close();
+        }
     }
 
     private void selectAllItems() {

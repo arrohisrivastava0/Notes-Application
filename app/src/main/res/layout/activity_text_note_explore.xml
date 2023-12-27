@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".textnote.TextNoteExploreActivity"
     >
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,15 +47,33 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/LLTextExp"
+            android:id="@+id/text_note_rvRL"
+
             >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/TextNoteExpNothingTV"
+                android:text="Nothing here"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="#4C4B4B"
+                android:visibility="gone"
+                />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/RVtextNoteExplore"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 tools:listitem="@layout/text_explore_activity_rv_items"
+                android:paddingBottom="100dp"
+                android:clipToPadding="false"
+
                 />
+
+
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,57 +97,47 @@
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:layout_gravity="bottom"
         app:fabAlignmentMode="center"
-        app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="20dp"
         android:visibility="gone"
+
         >
 
         <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:rowCount="1"
             android:columnCount="2">
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/btnSelectAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select All"
-                android:textSize="18sp"
-                app:icon="@drawable/baseline_select_all_24"
-                app:iconGravity="textTop"
-                android:background="@android:color/transparent"
-                android:textColor="?attr/colorOnBackground"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
                 android:layout_row="0"
                 android:layout_column="0"
-                android:layout_columnWeight="1"
-                />
+                android:layout_columnWeight="2"
+                android:background="?attr/selectableItemBackground"
+                android:drawableTop="@drawable/baseline_select_all_24"
+                android:text="Select All"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="18sp"
+                 />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/btnDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
                 android:text="Delete"
                 android:textSize="18sp"
-                app:icon="@drawable/baseline_delete_24"
-                app:iconGravity="textTop"
-                android:background="@android:color/transparent"
+                android:drawableTop="@drawable/baseline_delete_24"
+                android:background="?attr/selectableItemBackground"
                 android:textColor="?attr/colorOnBackground"
                 android:layout_row="0"
                 android:layout_column="1"
+                android:layout_columnWeight="2"
                 />
         </GridLayout>
     </com.google.android.material.bottomappbar.BottomAppBar>
-
-
-
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
