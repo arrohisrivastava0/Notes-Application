@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notesapplication.R;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -33,6 +35,8 @@ public class TextNoteExploreActivity extends AppCompatActivity {
     private TextNoteExploreRVAdapter textNoteExploreRVAdapter;
     private SearchView searchView;
     private boolean isInSelectionMode = false;
+    private BottomAppBar bottomAppBar;
+    private MaterialButton materialButtonSelectAll, materialButtonDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,9 @@ public class TextNoteExploreActivity extends AppCompatActivity {
         List<TextNoteData> textNoteData=getAllTextNotes();
         textNoteExploreRVAdapter=new TextNoteExploreRVAdapter(textNoteData, this);
         recyclerView.setAdapter(textNoteExploreRVAdapter);
+        bottomAppBar=findViewById(R.id.bottomAppBar);
+        materialButtonSelectAll=findViewById(R.id.btnSelectAll);
+        materialButtonDelete=findViewById(R.id.btnDelete);
 
         setCreateNewClickListener();
 
@@ -60,6 +67,12 @@ public class TextNoteExploreActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 filter(newText);
                 return false;
+            }
+        });
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupMenu(v);
             }
         });
     }
@@ -149,6 +162,8 @@ public class TextNoteExploreActivity extends AppCompatActivity {
             if (item.getItemId()==R.id.action_select){
                 isInSelectionMode=!isInSelectionMode;
                 updateRecyclerView();
+                bottomAppBar.setVisibility(View.VISIBLE);
+                setClickListenersBottomAppBar();
                 return true;
             }
             return false;
@@ -161,6 +176,21 @@ public class TextNoteExploreActivity extends AppCompatActivity {
         textNoteExploreRVAdapter.notifyDataSetChanged();
     }
 
+    private void setClickListenersBottomAppBar(){
+        materialButtonSelectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectAllItems();
+            }
+        });
+        materialButtonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteSelectedItems();
+            }
+        });
+
+    }
     private void deleteSelectedItems() {
         List<TextNoteData> selectedItems = new ArrayList<>();
         for (TextNoteData note : textNoteExploreRVAdapter.getTextNoteData()) {

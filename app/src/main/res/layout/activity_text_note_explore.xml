@@ -6,53 +6,73 @@
     android:layout_height="match_parent"
     tools:context=".textnote.TextNoteExploreActivity"
     >
-
-    <LinearLayout
-        android:id="@+id/LLTextExp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/exploreSV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            app:iconifiedByDefault="false"
-            app:queryHint="Search note" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/createNewTextExplore"
-                    android:src="@drawable/baseline_menu_24"
-                    android:background="@android:color/transparent"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:onClick="showPopupMenu"
-                    android:contentDescription="Create New"
-                    />
-
-    </LinearLayout>
-
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/LLTextExp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         >
+        <LinearLayout
+            android:id="@+id/LLTextExp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/RVtextNoteExplore"
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/exploreSV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                app:iconifiedByDefault="false"
+                app:queryHint="Search note" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/createNewTextExplore"
+                android:src="@drawable/baseline_menu_24"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:onClick="showPopupMenu"
+                android:contentDescription="Create New"
+                />
+
+        </LinearLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_below="@id/LLTextExp"
+            >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RVtextNoteExplore"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:listitem="@layout/text_explore_activity_rv_items"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="15dp"
+            >
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/floatAdd"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/float_button"
+                android:src="@drawable/baseline_add_24"
+                app:elevation="8dp"
+                app:shapeAppearance="@drawable/float_button" />
+        </RelativeLayout>
 
-            tools:listitem="@layout/text_explore_activity_rv_items"
-            />
     </RelativeLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -63,66 +83,52 @@
         app:fabAlignmentMode="center"
         app:fabCradleMargin="10dp"
         app:fabCradleRoundedCornerRadius="20dp"
+        android:visibility="gone"
         >
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_add_24"
-            app:layout_anchor="@id/bottomAppBar"
-            android:background="@drawable/float_button"
-            app:elevation="8dp"
-            app:shapeAppearance="@drawable/float_button"
-            android:layout_gravity="end"
-            android:visibility="gone"
-            />
-
-        <RelativeLayout
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp">
+            android:layout_marginStart="16dp"
+            android:layout_gravity="center"
+            android:rowCount="1"
+            android:columnCount="2">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSelectAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Select All"
-                android:layout_alignParentStart="true"
+                android:textSize="18sp"
                 app:icon="@drawable/baseline_select_all_24"
                 app:iconGravity="textTop"
                 android:background="@android:color/transparent"
                 android:textColor="?attr/colorOnBackground"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_columnWeight="1"
                 />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
                 android:text="Delete"
-                android:layout_alignParentEnd="true"
+                android:textSize="18sp"
                 app:icon="@drawable/baseline_delete_24"
                 app:iconGravity="textTop"
                 android:background="@android:color/transparent"
                 android:textColor="?attr/colorOnBackground"
+                android:layout_row="0"
+                android:layout_column="1"
                 />
-        </RelativeLayout>
+        </GridLayout>
     </com.google.android.material.bottomappbar.BottomAppBar>
 
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/floatAdd"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginEnd="10dp"-->
-<!--        android:layout_marginBottom="10dp"-->
-<!--        android:background="@drawable/float_button"-->
-<!--        android:src="@drawable/baseline_add_24"-->
-<!--        app:elevation="8dp"-->
-<!--        app:shapeAppearance="@drawable/float_button" />-->
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
