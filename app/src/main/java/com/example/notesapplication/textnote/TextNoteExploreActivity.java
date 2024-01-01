@@ -1,6 +1,7 @@
 package com.example.notesapplication.textnote;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,6 +15,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 ;
 
@@ -41,6 +43,7 @@ public class TextNoteExploreActivity extends AppCompatActivity {
     private BottomAppBar bottomAppBar;
     private Button materialButtonSelectAll, materialButtonDelete;
     private TextView textView;
+    private boolean result=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +62,9 @@ public class TextNoteExploreActivity extends AppCompatActivity {
         materialButtonSelectAll=findViewById(R.id.btnSelectAll);
         materialButtonDelete=findViewById(R.id.btnDelete);
         textView=findViewById(R.id.TextNoteExpNothingTV);
-
+        if (!getAllTextNotes().isEmpty())
+            textView.setVisibility(View.GONE);
         setCreateNewClickListener();
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -85,7 +88,9 @@ public class TextNoteExploreActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        if (getAllTextNotes().isEmpty())
+            textView.setVisibility(View.VISIBLE);
+        else textView.setVisibility(View.GONE);
         if (!searchView.getQuery().toString().isEmpty()) {
             filter(searchView.getQuery().toString());
         } else {
@@ -209,11 +214,35 @@ public class TextNoteExploreActivity extends AppCompatActivity {
                 selectedItems.add(note.getId());
             }
         }
-        deleteFromDb(selectedItems);
-        textNoteExploreRVAdapter.setData(getAllTextNotes());
-        isInSelectionMode=!isInSelectionMode;
-        updateRecyclerView();
-        bottomAppBar.setVisibility(View.GONE);
+        showConfirmationDialog(selectedItems);
+    }
+
+    private void showConfirmationDialog(List<Long> selectedItems) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Permanently delete "+selectedItems.size()+" notes?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteFromDb(selectedItems);
+                textNoteExploreRVAdapter.setData(getAllTextNotes());
+                isInSelectionMode=!isInSelectionMode;
+                updateRecyclerView();
+                bottomAppBar.setVisibility(View.GONE);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // If the user cancels, dismiss the dialog and do nothing
+                textNoteExploreRVAdapter.setData(getAllTextNotes());
+                isInSelectionMode=!isInSelectionMode;
+                updateRecyclerView();
+                bottomAppBar.setVisibility(View.GONE);
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+
     }
 
     private void deleteFromDb(List<Long> items){
@@ -233,5 +262,25 @@ public class TextNoteExploreActivity extends AppCompatActivity {
             note.setSelected(true);
         }
         updateRecyclerView();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (shouldHandleBackNavigation()) {
+            textNoteExploreRVAdapter.setData(getAllTextNotes());
+            isInSelectionMode=!isInSelectionMode;
+            updateRecyclerView();
+            bottomAppBar.setVisibility(View.GONE);
+        } else {
+
+            super.onBackPressed();
+        }
+    }
+
+    private boolean shouldHandleBackNavigation() {
+        if (isInSelectionMode)
+            return true;
+        return false;
     }
 }
