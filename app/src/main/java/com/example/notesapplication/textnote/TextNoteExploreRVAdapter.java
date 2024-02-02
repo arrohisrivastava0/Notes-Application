@@ -38,17 +38,6 @@ public class TextNoteExploreRVAdapter extends RecyclerView.Adapter<TextNoteExplo
         holder.headingTV.setText(currentTextNoteData.getHeading());
         holder.textTV.setText(currentTextNoteData.getContent());
         holder.checkBox.setChecked(currentTextNoteData.isSelected());
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int position = holder.getAdapterPosition();
-//                if (position != RecyclerView.NO_POSITION) {
-//                    TextNoteData note = textNoteData.get(position);
-//                    // Open the selected note for editing
-//                    openNoteForEditing(note);
-//                }
-//            }
-//        });
         if (isInSelectionMode)
             holder.checkBox.setVisibility(View.VISIBLE);
         else holder.checkBox.setVisibility(View.GONE);
@@ -91,8 +80,7 @@ public class TextNoteExploreRVAdapter extends RecyclerView.Adapter<TextNoteExplo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView headingTV;
-        TextView textTV;
+        TextView headingTV, textTV;
         CheckBox checkBox;
 
         public ViewHolder(@NonNull View itemView) {
