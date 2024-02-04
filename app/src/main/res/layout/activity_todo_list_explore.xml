@@ -65,13 +65,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                tools:listitem="@layout/text_explore_activity_rv_items"
+                tools:listitem="@layout/todo_explore_activity_rv_items"
                 android:paddingBottom="100dp"
                 android:clipToPadding="false"
-
                 />
-
-
         </RelativeLayout>
 
         <RelativeLayout

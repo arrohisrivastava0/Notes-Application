@@ -6,10 +6,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class TodoListDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "todo_list_database";
+public class TodoListExploreDatabaseHelper extends SQLiteOpenHelper {
+    private static final String DATABASE_NAME = "todo_list_explore_database";
     private static final int DATABASE_VERSION= 1;
-    public static final String TABLE_TODO = "todo_list";
+    public static final String TABLE_TODO = "todo_list_explore";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_TODO_HEADING = "todo_list_heading";
     public static final String COLUMN_TODO_ITEM="todo_list_item";
@@ -19,7 +19,7 @@ public class TodoListDatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_TODO_HEADING + " TEXT, " + COLUMN_TODO_ITEM+" TEXT, " + COLUMN_TODO_STATUS+" TEXT);";
 
-    public TodoListDatabaseHelper(@Nullable Context context) {
+    public TodoListExploreDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

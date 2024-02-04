@@ -1,16 +1,14 @@
 package com.example.notesapplication.todo_list;
 
-import com.example.notesapplication.textnote.TextNoteData;
-
 import java.util.Objects;
 
-public class TodoListData {
+public class TodoListExploreData {
     private long id;
     private String heading;
     private String content;
     private boolean isSelected;
 
-    public TodoListData(long id, String heading, String content, boolean isSelected) {
+    public TodoListExploreData(long id, String heading, String content, boolean isSelected) {
         this.id = id;
         this.heading = heading;
         this.content = content;
@@ -45,7 +43,7 @@ public class TodoListData {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        TodoListData other = (TodoListData) obj;
+        TodoListExploreData other = (TodoListExploreData) obj;
         return Objects.equals(heading, other.heading) && Objects.equals(content, other.content);
     }
 

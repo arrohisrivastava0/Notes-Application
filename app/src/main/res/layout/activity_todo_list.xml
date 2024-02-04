@@ -81,10 +81,5 @@
             android:paddingEnd="10dp"
 
             />
-
-
     </RelativeLayout>
-
-
-
 </RelativeLayout>
