@@ -27,12 +27,6 @@ public class TodoListData {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
-    public boolean isItemSelected() {
-        return isItemSelected;
-    }
-    public void setItemSelected(boolean itemSelected) {
-        isItemSelected = itemSelected;
-    }
 
     @Override
     public boolean equals(Object obj) {

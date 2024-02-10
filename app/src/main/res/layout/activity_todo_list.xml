@@ -13,7 +13,7 @@
         >
 
         <EditText
-            android:id="@+id/headingTextNote"
+            android:id="@+id/headingTodoList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
@@ -27,7 +27,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/saveTextNote"
+            android:id="@+id/saveTodoList"
             android:src="@drawable/baseline_check_24"
             app:tint="?attr/colorOnBackground"
             android:background="@android:color/transparent"

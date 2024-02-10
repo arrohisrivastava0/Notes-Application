@@ -35,7 +35,6 @@ public class TextNoteActivity extends AppCompatActivity {
     private long noteId;
     private boolean isExisting;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

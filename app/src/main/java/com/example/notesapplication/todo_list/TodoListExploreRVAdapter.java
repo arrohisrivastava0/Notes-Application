@@ -44,7 +44,7 @@ public class TodoListExploreRVAdapter extends RecyclerView.Adapter<TodoListExplo
         return todoListExploreData;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView headingTV, statusTV;
         CheckBox checkBox;
 
