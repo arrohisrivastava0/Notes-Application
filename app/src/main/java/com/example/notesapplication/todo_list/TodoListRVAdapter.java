@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notesapplication.R;
 
+import java.util.List;
+
 public class TodoListRVAdapter extends RecyclerView.Adapter<TodoListRVAdapter.ViewHolder> {
+    private List<TodoListData> todoListData;
 
     @NonNull
     @Override
@@ -27,6 +30,10 @@ public class TodoListRVAdapter extends RecyclerView.Adapter<TodoListRVAdapter.Vi
     public int getItemCount() {
         return 0;
     }
+    public List<TodoListData> getTodoListData() {
+        return todoListData;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTodoItemHead;

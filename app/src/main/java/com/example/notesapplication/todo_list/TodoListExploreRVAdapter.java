@@ -29,6 +29,7 @@ public class TodoListExploreRVAdapter extends RecyclerView.Adapter<TodoListExplo
     public void onBindViewHolder(@NonNull TodoListExploreRVAdapter.ViewHolder holder, int position) {
         TodoListExploreData currentTodoListExploreData=todoListExploreData.get(position);
         holder.headingTV.setText(currentTodoListExploreData.getHeading());
+
     }
 
     @Override
