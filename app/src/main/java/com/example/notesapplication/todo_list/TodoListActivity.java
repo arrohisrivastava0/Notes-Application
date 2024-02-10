@@ -11,7 +11,6 @@ import com.example.notesapplication.R;
 public class TodoListActivity extends AppCompatActivity {
 
     private TodoListDatabaseHelper todoListDatabaseHelper;
-    private TodoListExploreDatabaseHelper todoListExploreDatabaseHelper;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState);

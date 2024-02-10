@@ -79,7 +79,7 @@ public class TextNoteExploreRVAdapter extends RecyclerView.Adapter<TextNoteExplo
         return textNoteData;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView headingTV, textTV;
         CheckBox checkBox;
 
