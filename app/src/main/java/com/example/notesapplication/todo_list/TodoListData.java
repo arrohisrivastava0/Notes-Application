@@ -5,14 +5,13 @@ import java.util.Objects;
 public class TodoListData {
     private long id;
     private String items;
+    private int itemNo;
     private boolean isSelected;
-    private boolean isItemSelected;
 
-    public TodoListData(long id, String items, boolean isSelected, boolean isItemSelected) {
+    public TodoListData(long id, String items) {
         this.id = id;
         this.items = items;
-        this.isSelected = isSelected;
-        this.isItemSelected=isItemSelected;
+
     }
 
     public long getId() {
@@ -26,6 +25,14 @@ public class TodoListData {
     }
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public int getItemNo() {
+        return itemNo;
+    }
+
+    public void setItemNo() {
+        this.itemNo = itemNo+1;
     }
 
     @Override

@@ -36,7 +36,7 @@ public class TodoListRVAdapter extends RecyclerView.Adapter<TodoListRVAdapter.Vi
     }
     @Override
     public int getItemCount() {
-        return 0;
+        return todoListData.size();
     }
     public List<TodoListData> getTodoListData() {
         return todoListData;
