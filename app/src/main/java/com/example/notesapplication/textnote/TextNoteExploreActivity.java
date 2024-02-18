@@ -43,7 +43,7 @@ public class TextNoteExploreActivity extends AppCompatActivity {
     private BottomAppBar bottomAppBar;
     private Button materialButtonSelectAll, materialButtonDelete;
     private TextView textView;
-    private boolean result=false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

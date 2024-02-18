@@ -13,6 +13,7 @@ public class TodoListDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_TODO_HEADING = "todo_heading";
     public static final String COLUMN_TODO_ITEM="todo_list_item";
+    public static final String COLUMN_TODO_NO_ITEM="todo_list_item_no";
     public static final String TABLE_TODO_LIST_ITEMS = "todo_list_items";
     public static final String COLUMN_LIST_ID = "list_id";
     public static final String COLUMN_IS_COMPLETED = "is_completed";
@@ -21,6 +22,7 @@ public class TodoListDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_TODO_CREATE =
             "CREATE TABLE " + TABLE_TODO_LIST + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_TODO_NO_ITEM+" TEXT,"+
                     COLUMN_TODO_HEADING+" TEXT);";
     private static final String TABLE_TODO_ITEMS_CREATE =
             "CREATE TABLE " + TABLE_TODO_LIST_ITEMS + " (" +

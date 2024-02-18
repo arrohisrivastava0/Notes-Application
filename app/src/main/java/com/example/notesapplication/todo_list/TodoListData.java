@@ -30,7 +30,6 @@ public class TodoListData {
     public int getItemNo() {
         return itemNo;
     }
-
     public void setItemNo() {
         this.itemNo = itemNo+1;
     }

@@ -1,5 +1,6 @@
 package com.example.notesapplication.todo_list;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,13 @@ import java.util.List;
 
 public class TodoListRVAdapter extends RecyclerView.Adapter<TodoListRVAdapter.ViewHolder> {
     private List<TodoListData> todoListData;
+    private Context context;
+
+    public TodoListRVAdapter(List<TodoListData> todoListData, Context context) {
+        this.todoListData = todoListData;
+        this.context = context;
+    }
+
     @NonNull
     @Override
     public TodoListRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

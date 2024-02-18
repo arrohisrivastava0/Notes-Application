@@ -5,14 +5,13 @@ import java.util.Objects;
 public class TodoListExploreData {
     private long id;
     private String heading;
-    private String content;
+    private String noItems;
     private boolean isSelected;
 
-    public TodoListExploreData(long id, String heading, String content, boolean isSelected) {
+    public TodoListExploreData(long id, String heading, String noItems) {
         this.id = id;
         this.heading = heading;
-        this.content = content;
-        this.isSelected = isSelected;
+        this.noItems = noItems;
     }
 
     public long getId() {
@@ -23,8 +22,8 @@ public class TodoListExploreData {
         return heading;
     }
 
-    public String getContent() {
-        return content;
+    public String getNoItems() {
+        return noItems;
     }
 
     public boolean isSelected() {
@@ -44,12 +43,12 @@ public class TodoListExploreData {
             return false;
         }
         TodoListExploreData other = (TodoListExploreData) obj;
-        return Objects.equals(heading, other.heading) && Objects.equals(content, other.content);
+        return Objects.equals(heading, other.heading) && Objects.equals(noItems, other.noItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(heading, content);
+        return Objects.hash(heading, noItems);
     }
 }
 

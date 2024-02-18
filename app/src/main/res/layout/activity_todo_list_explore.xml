@@ -23,7 +23,7 @@
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/todoexploreSV"
-                android:layout_width="wrap_content"
+                android:layout_width="369dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 app:iconifiedByDefault="false"
@@ -32,7 +32,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/createNewTodoExplore"
+                android:id="@+id/todoExploreMenu"
                 android:src="@drawable/baseline_menu_24"
                 android:background="@android:color/transparent"
                 android:layout_gravity="center"

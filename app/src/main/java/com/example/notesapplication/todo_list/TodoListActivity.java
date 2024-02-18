@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -14,10 +16,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notesapplication.R;
 import com.example.notesapplication.textnote.TextNoteData;
 import com.example.notesapplication.textnote.TextNoteDatabaseHelper;
+import com.example.notesapplication.textnote.TextNoteExploreRVAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +32,7 @@ public class TodoListActivity extends AppCompatActivity {
     private EditText addItemET, headingTodoListET;
     private long todoID;
     private boolean isExisting;
+    private RecyclerView todoRV;
     private TodoListDatabaseHelper todoListDatabaseHelper;
     private TodoListRVAdapter todoListRVAdapter;
     @Override
@@ -37,13 +43,43 @@ public class TodoListActivity extends AppCompatActivity {
         saveTodoList=findViewById(R.id.saveTodoList);
         addItemTodo=findViewById(R.id.TodoAddItemAddBtn);
         addItemET=findViewById(R.id.TodoAddItemET);
-        List<TodoListData> todoListData=loadTodoListFromDB(todoID);
+        todoRV=findViewById(R.id.todoRV);
+        todoRV.setLayoutManager(new LinearLayoutManager(this));
         headingTodoListET=findViewById(R.id.headingTodoList);
         boolean isNewNote = getIntent().getBooleanExtra("isNewNote", false);
-        todoID=getIntent().getLongExtra("noteId",-1);
+        todoID=getIntent().getLongExtra("todoId",-1);
         if(todoID!=-1){
             isExisting=true;
         }
+        if (isNewNote) {
+            // Clear any existing note data and present a blank note
+            headingTodoListET.setText("");
+        } else {
+            // Load existing note data
+            List<TodoListData> todoListData=loadTodoListFromDB(todoID);
+            todoListRVAdapter=new TodoListRVAdapter(todoListData, this);
+            todoRV.setAdapter(todoListRVAdapter);
+            String savedTodoHead=loadTodoHeadingFromDB(todoID);
+            headingTodoListET.setText(savedTodoHead);
+        }
+
+        headingTodoListET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         saveTodoList.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -56,12 +92,24 @@ public class TodoListActivity extends AppCompatActivity {
                     }
                     else {
                         saveTextNoteToDatabase(addItemET.getText().toString(), 9);
-                        Log.d("SaveButton", "Save button clicked");
+                        Log.d("SaveButton", "Saved");
                         finish();
                     }
                 }
             }
         });
+    }
+
+    public void onResume() {
+        super.onResume();
+        todoListRVAdapter.setData(loadTodoListFromDB(todoID));
+        todoListRVAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        todoListDatabaseHelper.close();
     }
 
     @SuppressLint("Range")
@@ -149,6 +197,7 @@ public class TodoListActivity extends AppCompatActivity {
         int rowsAffected = sqLiteDatabase.update(TodoListDatabaseHelper.TABLE_TODO_LIST_ITEMS, contentValues,
                 TodoListDatabaseHelper.COLUMN_LIST_ID+"=?",
                 new String[]{String.valueOf(todoID)});
+        todoListRVAdapter.notifyDataSetChanged();
         sqLiteDatabase.close();
     }
 }
