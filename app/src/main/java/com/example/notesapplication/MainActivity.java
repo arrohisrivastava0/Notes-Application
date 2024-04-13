@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 
 import com.example.notesapplication.textnote.TextNoteExploreActivity;
+import com.example.notesapplication.todo_list.TodoListExploreActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         GridLayout gridLayout=findViewById(R.id.gridLayout);
         setButtonClickListener(gridLayout, R.id.btnNotes, TextNoteExploreActivity.class);
+        setButtonClickListener(gridLayout, R.id.btnTodoList, TodoListExploreActivity.class);
     }
 
     public void setButtonClickListener(GridLayout gridLayout, int buttonId, final Class<?> destinationClass){

@@ -21,11 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notesapplication.R;
-import com.example.notesapplication.textnote.TextNoteActivity;
-import com.example.notesapplication.textnote.TextNoteData;
 import com.example.notesapplication.textnote.TextNoteDatabaseHelper;
-import com.example.notesapplication.textnote.TextNoteExploreActivity;
-import com.example.notesapplication.textnote.TextNoteExploreRVAdapter;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -233,14 +229,11 @@ public class TodoListExploreActivity extends AppCompatActivity {
     }
 
     private void deleteFromDb(List<Long> items){
-        SQLiteDatabase sqLiteDatabase=todoListDatabaseHelper.getWritableDatabase();
-        try {
-            for(long todoId:items){
-                sqLiteDatabase.delete(TodoListDatabaseHelper.TABLE_TODO_LIST, TextNoteDatabaseHelper.COLUMN_ID+"=?",
+        try (SQLiteDatabase sqLiteDatabase = todoListDatabaseHelper.getWritableDatabase()) {
+            for (long todoId : items) {
+                sqLiteDatabase.delete(TodoListDatabaseHelper.TABLE_TODO_LIST, TextNoteDatabaseHelper.COLUMN_ID + "=?",
                         new String[]{String.valueOf(todoId)});
             }
-        }finally {
-            sqLiteDatabase.close();
         }
     }
     private void selectAllItems() {

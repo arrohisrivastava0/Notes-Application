@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".textnote.TextNoteActivity"/>
         <activity android:name=".textnote.TextNoteExploreActivity"/>
+        <activity android:name=".todo_list.TodoListActivity"/>
+        <activity android:name=".todo_list.TodoListExploreActivity"/>
     </application>
 
 </manifest>

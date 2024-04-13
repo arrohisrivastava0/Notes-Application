@@ -20,9 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notesapplication.R;
-import com.example.notesapplication.textnote.TextNoteData;
-import com.example.notesapplication.textnote.TextNoteDatabaseHelper;
-import com.example.notesapplication.textnote.TextNoteExploreRVAdapter;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +29,15 @@ public class TodoListActivity extends AppCompatActivity {
     private ImageButton saveTodoList, addItemTodo;
     private EditText addItemET, headingTodoListET;
     private long todoID;
-    private boolean isExisting;
+    private boolean isExisting=false;
     private RecyclerView todoRV;
     private TodoListDatabaseHelper todoListDatabaseHelper;
     private TodoListRVAdapter todoListRVAdapter;
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
+
         todoListDatabaseHelper=new TodoListDatabaseHelper(this);
         saveTodoList=findViewById(R.id.saveTodoList);
         addItemTodo=findViewById(R.id.TodoAddItemAddBtn);
@@ -46,13 +45,14 @@ public class TodoListActivity extends AppCompatActivity {
         todoRV=findViewById(R.id.todoRV);
         todoRV.setLayoutManager(new LinearLayoutManager(this));
         headingTodoListET=findViewById(R.id.headingTodoList);
-        boolean isNewNote = getIntent().getBooleanExtra("isNewNote", false);
+        boolean isNewNote = getIntent().getBooleanExtra("isNewNote",false);
         todoID=getIntent().getLongExtra("todoId",-1);
         if(todoID!=-1){
             isExisting=true;
         }
         if (isNewNote) {
             // Clear any existing note data and present a blank note
+
             headingTodoListET.setText("");
         } else {
             // Load existing note data
@@ -102,8 +102,12 @@ public class TodoListActivity extends AppCompatActivity {
 
     public void onResume() {
         super.onResume();
-        todoListRVAdapter.setData(loadTodoListFromDB(todoID));
-        todoListRVAdapter.notifyDataSetChanged();
+        if (!loadTodoHeadingFromDB(todoID).isEmpty())
+//        if(todoID!=-1)
+        {
+            todoListRVAdapter.setData(loadTodoListFromDB(todoID));
+            todoListRVAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -117,7 +121,7 @@ public class TodoListActivity extends AppCompatActivity {
         String todoHead="";
         SQLiteDatabase sqLiteDatabase=todoListDatabaseHelper.getReadableDatabase();
         String[] projection={TodoListDatabaseHelper.COLUMN_TODO_HEADING};
-        String selection = TextNoteDatabaseHelper.COLUMN_ID + " = ?";
+        String selection = TodoListDatabaseHelper.COLUMN_ID + " = ?";
         String[] selectionArgs = {String.valueOf(todoID)};
         try(Cursor cursor= sqLiteDatabase.query(
                 TodoListDatabaseHelper.TABLE_TODO_LIST,
@@ -143,29 +147,38 @@ public class TodoListActivity extends AppCompatActivity {
         SQLiteDatabase sqLiteDatabase=todoListDatabaseHelper.getReadableDatabase();
         String[] projection = {
                 TodoListDatabaseHelper.COLUMN_ID,
-                TodoListDatabaseHelper.COLUMN_LIST_ID,
                 TodoListDatabaseHelper.COLUMN_TODO_ITEM,
                 TodoListDatabaseHelper.COLUMN_IS_COMPLETED
         };
-        Cursor cursor=sqLiteDatabase.query(
+        String selection = TodoListDatabaseHelper.COLUMN_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(todoID)};
+        try(Cursor cursor= sqLiteDatabase.query(
                 TodoListDatabaseHelper.TABLE_TODO_LIST_ITEMS,
                 projection,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 null,
                 null,
                 TodoListDatabaseHelper.COLUMN_LIST_ID + " DESC"
-        );
-        if (cursor != null&&cursor.moveToFirst()){
-            do{
-                @SuppressLint("Range") long id=cursor.getLong(cursor.getColumnIndex(TodoListDatabaseHelper.COLUMN_LIST_ID));
-                @SuppressLint("Range") String items=cursor.getString(cursor.getColumnIndex(TodoListDatabaseHelper.COLUMN_TODO_ITEM));
-                todoListData.add(new TodoListData(id, items));
-            }while (cursor.moveToNext());
+        ) )
+        {
+            if (cursor != null && cursor.moveToFirst()){
+                do{
+                    @SuppressLint("Range") long id=cursor.getLong(cursor.getColumnIndex(TodoListDatabaseHelper.COLUMN_LIST_ID));
+                    @SuppressLint("Range") String items=cursor.getString(cursor.getColumnIndex(TodoListDatabaseHelper.COLUMN_TODO_ITEM));
+                    todoListData.add(new TodoListData(id, items));
+                }while (cursor.moveToNext());
+            }
+
+            if (cursor != null){
+                cursor.close();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this,"An error occurred", Toast.LENGTH_SHORT).show();
         }
-        if (cursor != null){
-            cursor.close();
-        }
+
         sqLiteDatabase.close();
         return todoListData;
     }
