@@ -92,6 +92,7 @@ public class TodoListActivity extends AppCompatActivity {
                     }
                     else {
                         saveTextNoteToDatabase(addItemET.getText().toString(), 9);
+
                         Log.d("SaveButton", "Saved");
                         finish();
                     }

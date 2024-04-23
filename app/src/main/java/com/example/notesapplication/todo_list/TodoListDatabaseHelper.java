@@ -22,7 +22,6 @@ public class TodoListDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_TODO_CREATE =
             "CREATE TABLE " + TABLE_TODO_LIST + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_TODO_NO_ITEM+" TEXT,"+
                     COLUMN_TODO_HEADING+" TEXT);";
     private static final String TABLE_TODO_ITEMS_CREATE =
             "CREATE TABLE " + TABLE_TODO_LIST_ITEMS + " (" +
